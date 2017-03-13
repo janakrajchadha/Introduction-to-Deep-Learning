@@ -1,3 +1,6 @@
+#Classifying the sentiment of IMDB Movie reviews using Recurrent Neural Networks
+#Deep learning library used - TFLearn
+
 from __future__ import division, print_function, absolute_import
 import tflearn
 from tflearn.data_utils import to_categorical, pad_sequences
