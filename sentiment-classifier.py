@@ -7,20 +7,20 @@ from tflearn.data_utils import to_categorical, pad_sequences
 from tflearn.datasets import imdb
 
 #Loading the dataset
-train, test, _ = imdb.load_data(path='imdb.pkl', n_words = 15000, valid_portion = 0.15)
+train, test, _ = imdb.load_data(path='imdb.pkl', n_words = 15000, valid_portion = 0.1)
 
-trainA, trainB = train
-testA, testB = test
+train_features, train_labels = train
+test_features, test_labels = test
 
 #Pre processing the data
-#Sequence padding 
+#Sequence padding
 
-trainA = pad_sequences(trainA , maxlen = 100, value = 0.)
-testA = pad_sequences(testA , maxlen = 100, value = 0.)
+train_features = pad_sequences(train_features , maxlen = 100, value = 0.)
+test_features = pad_sequences(test_features , maxlen = 100, value = 0.)
 
 #converting the labels as well
-trainB = to_categorical(trainB, nb_classes = 2)
-testB = to_categorical(testB, nb_classes = 2)
+train_labels = to_categorical(train_labels, nb_classes = 2)
+test_labels = to_categorical(test_labels, nb_classes = 2)
 
 #Building the main network using tflearn
 
@@ -33,4 +33,4 @@ net1 = tflearn.regression(net1, optimizer = 'adam', learning_rate = 0.00005, los
 #Training time
 
 model = tflearn.DNN(net1, tensorboard_verbose = 0)
-model.fit(trainA, trainB, validation_set = (testA, testB), show_metric = True, batch_size = 32)
+model.fit(train_features, train_labels, validation_set = (test_features, test_labels), show_metric = True, batch_size = 32)
